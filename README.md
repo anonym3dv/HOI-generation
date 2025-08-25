@@ -76,29 +76,64 @@ This project expects the same preprocessed files Text2HOI.
 
 ---
 
-## 🏋️ Training
+## 🏋️ Training Text-HOI Model
 
 ```bash
 source scripts/train/train_texthoi.sh
 ```
+
 or Download the pre-trained **[DivideMotion](<MODEL_LINK>)** and place it in checkpoint folder
+
 ---
 
-## 📊 Evaluation
+## 📊 Evaluation & Training — Text–Motion Match
 
-For evaluation, make sure to generate data **20 times per prompt** and download our **[text–motion matching model](<MODEL_LINK>)**.
-
+**Generate evaluation data (20× per prompt)**
 
 ```bash
-python Evaluation/evaluation_data_generation.py                  #for Evaluation data on test set
+python Evaluation/evaluation_data_generation.py
+```
 
+**Download the pretrained model**: [text–motion matching model](MODEL_LINK) → place it in `<PATH_TO_MODEL_DIR>`.
 
-# Universal evaluation template — replace <> with your values
-python eval.py \                                # In text motion match folder
---model_dir <PATH_TO_MODEL_DIR> \       # model dir is the text-motion match model downloaded
---log_file <PATH_TO_LOG_FILE> \
---device_id <GPU_ID>  
---data_root <PATH_TO_DATA_DIR>                  # After moving to the Text-motion-match folder 
+**Evaluation (run from the Text–Motion Match folder)**
+
+```bash
+python eval.py \
+  --model_dir <PATH_TO_MODEL_DIR> \
+  --log_file <PATH_TO_LOG_FILE> \
+  --device_id <GPU_ID> \
+  --data_root <PATH_TO_DATA_DIR>
+```
+
+**When training, ensure:** `--dim_pose = x_lhand + x_rhand + x_obj`.
+
+**Training — GRAB**
+
+```bash
+python train.py \
+  --dataset_name grab \
+  --gpu_id 0 \
+  --batch_size 64 \
+  --dim_pose 207 \
+  --dim_motion_latent 512 \
+  --num_layers 6 \
+  --num_heads 8 \
+  --dropout 0.1
+```
+
+**Training — ARCTIC**
+
+```bash
+python train.py \
+  --dataset_name arctic \
+  --gpu_id 0 \
+  --batch_size 64 \
+  --dim_pose 208 \
+  --dim_motion_latent 512 \
+  --num_layers 6 \
+  --num_heads 8 \
+  --dropout 0.1
 ```
 
 ---
