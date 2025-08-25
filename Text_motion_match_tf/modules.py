@@ -42,11 +42,11 @@ class ContrastiveLoss(nn.Module):
         Returns:
             loss (Tensor): Moyenne des pertes contrastives dans les deux directions
         """
-        # Normalisation L2
+        
         features_norm = embed_cond / embed_cond.norm(dim=-1, keepdim=True)
         motion_features_norm = embed_hand_motion / embed_hand_motion.norm(dim=-1, keepdim=True)
 
-        # Similarité par produit scalaire (cosine similarity × logit scale)
+       
         logit_scale = self.latent_scale ** 2
         logits_per_motion = logit_scale * motion_features_norm @ features_norm.t()
         logits_per_cond = logits_per_motion.t()
@@ -54,7 +54,7 @@ class ContrastiveLoss(nn.Module):
         batch_size = embed_hand_motion.size(0)
         ground_truth = torch.arange(batch_size, dtype=torch.long, device=embed_hand_motion.device)
 
-        # Pertes dans les deux directions
+        
         loss_motion = self.loss_fn(logits_per_motion, ground_truth)
         loss_cond = self.loss_fn(logits_per_cond, ground_truth)
 
