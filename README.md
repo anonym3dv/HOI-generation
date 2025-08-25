@@ -94,10 +94,11 @@ python Evaluation/evaluation_data_generation.py                  #for Evaluation
 
 
 # Universal evaluation template — replace <> with your values
-python eval.py \
+python eval.py \                                # In text motion match folder
 --model_dir <PATH_TO_MODEL_DIR> \       # model dir is the text-motion match model downloaded
 --log_file <PATH_TO_LOG_FILE> \
---device_id <GPU_ID>                    # After moving to the Text-motion-match folder 
+--device_id <GPU_ID>  
+--data_root <PATH_TO_DATA_DIR>                  # After moving to the Text-motion-match folder 
 ```
 
 ---
@@ -121,7 +122,7 @@ We appreciate your feedback — it helps us prioritize fixes and improvements.
 ---
 ## 🙏 Acknowledgments
 
-This project is **heavily inspired** by [Text2HOI](https://github.com/JunukCha/Text2HOI) (Cha et al., 2024).  
+This project is **inspired** by [Text2HOI](https://github.com/JunukCha/Text2HOI) (Cha et al., 2024).  
 We follow their data protocols and some implementations.  
 
 
